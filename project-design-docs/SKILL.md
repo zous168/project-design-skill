@@ -147,7 +147,12 @@ is written.
      separate analytics/cache store) shapes the whole data model.
 
    So unless the user already fixed the stack, use `AskUserQuestion` to settle, at
-   minimum: **front-end framework + UI component library**, **back-end framework /
+   minimum: **front-end framework + UI component library** (and its **icon
+   library** — default to the UI library's own icon set, e.g. Element Plus Icons /
+   Ant Design Icons / MUI Icons / Lucide for shadcn; if the framework ships none,
+   pick an **open icon library** — Iconify, Lucide, Tabler, Heroicons — so the UI
+   stays polished; this one has a sensible default, so only ask when the user has a
+   preference), **back-end framework /
    language**, the **database(s)** (primary datastore — e.g. PostgreSQL / MySQL /
    MongoDB — plus any separate analytics/log store and a cache/queue like Redis;
    note how the cfg/data/logs/stats split maps onto it), and **architecture shape**
@@ -345,9 +350,15 @@ toy:
    library uses them, **navigation and drill-down linkage between screens**
    (clicking a list row opens its detail; a card jumps to the related screen), and
    the **empty / loading / error** states — not only the happy, populated path.
-   Wire the primary action buttons (incl. create/new) so a reviewer can actually
-   trigger a dialog and see the confirm→feedback loop. Use the library's own
-   primitives (e.g. `ElMessageBox`, `ElMessage`) rather than reinventing them.
+   **Put create/edit forms in the library's modal dialog or drawer** (`el-dialog` /
+   `el-drawer`, antd `Modal` / `Drawer`) rather than a separate full-page form —
+   that's the idiom these libraries are built around and it keeps the user in
+   context on the list/workbench; reserve a full page or a multi-step **wizard**
+   only for genuinely long/complex input. Wire the primary action buttons (incl.
+   create/new/edit) so a reviewer can actually open the form dialog, see it
+   validate, submit, and get the toast/feedback — and trigger the confirm→feedback
+   loop on destructive actions. Use the library's own primitives (e.g.
+   `ElMessageBox`, `ElMessage`) rather than reinventing them.
 5. **Demonstrate the cross-cutting defaults.** Unless excluded, wire in **theme
    switching (light / dark / follow-system)** using the library's dark-mode
    mechanism, and **language switching** on an **i18n foundation** (e.g.
@@ -355,6 +366,14 @@ toy:
    antd `ConfigProvider`) with the user's language + English — strings come from
    the i18n catalog, not hard-coded. These prove the system's default
    capabilities are real, not just claimed in a doc.
+6. **Use the chosen icon library — icons, not emoji or bare text.** Render icons
+   from the **icon library settled in Phase 0**: the UI library's own set (Element
+   Plus Icons, Ant Design Icons, MUI Icons, Lucide for shadcn) or, when the
+   framework ships none, the agreed **open library** (Iconify / Lucide / Tabler /
+   Heroicons). Use them purposefully — nav items, action buttons, status, empty
+   states — for clarity and a polished look, **one consistent family at consistent
+   sizes**. Don't substitute emoji or text glyphs for real icons, and don't mix
+   clashing icon sets.
 
 Pull content from finished upstream docs (entities/fields from the data design so
 forms/lists show realistic mock content, not lorem ipsum). Annotate each screen
@@ -370,10 +389,11 @@ Run the prototype and **actually click every key interactive element**, confirmi
 the expected effect — don't accept it by eyeballing a screenshot. Build an
 **interaction acceptance checklist** in `prototype-notes.md`: one row per
 interactive element with its expected result, ticked when exercised. At minimum,
-per screen: each **action button → its dialog/drawer opens**; **confirm → toast/
-feedback fires**; **list row / card → drills into detail / navigates**; **tabs,
-filters, segmented, theme & language toggles → switch**; the **empty / loading /
-error** states are reachable. Drive the clicks with the browser/preview tools
+per screen: each **action button → its dialog/drawer opens**; **create/edit →
+form dialog opens, validates, submits → toast fires**; **confirm → toast/feedback
+fires**; **list row / card → drills into detail / navigates**; **tabs, filters,
+segmented, theme & language toggles → switch**; the **empty / loading / error**
+states are reachable. Drive the clicks with the browser/preview tools
 (`preview_click` / `preview_eval`) so acceptance is evidence, not assertion.
 Also: run across the declared **responsive breakpoints**, and confirm the compiled
 `dist/` opens **statically** (no dev server) and still renders + interacts. A

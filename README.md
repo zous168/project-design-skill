@@ -49,7 +49,7 @@ and `README` / `CHANGELOG` / `consistency-report` on assembly.
 ## 🔄 Pipeline
 
 ```
-Phase 0 Intake & Clarify  → baseline + tech direction (FE/UI, BE, DB, architecture)
+Phase 0 Intake & Clarify  → baseline + tech direction (FE/UI + icon lib, BE, DB, arch)
                             + sub-systems (type · aesthetic bar · visual refs)
                             + roles + defaults (theme/i18n/responsive)
 Phase 1 Plan              → which docs + whether to prototype (per sub-system)

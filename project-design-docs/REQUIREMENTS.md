@@ -1,5 +1,5 @@
 ---
-doc_version: 11
+doc_version: 12
 updated: 2026-06-19
 status: reviewed
 ---
@@ -51,12 +51,27 @@ version frontmatter above, iteration log at the bottom.)
 | R35 | **Per-surface usage-scenario type + UI-aesthetic bar** asked in Phase 0 (tool / admin console / marketing site / dashboard / mobile) — drives the **visual direction** (which generator leads) **and the functional layout** (density, nav, chrome-vs-content) | ✅ | Phase 0 step 5, 00-PROGRESS template, UX brief, Rubric D "Calibrated to the surface's aesthetic bar" |
 | R36 | **Ask the user for visual references / 效果图** in Phase 0 (mockups, competitor screenshots, brand/style guide) — recorded in the baseline, fed into prototype generation + UX brief visual direction | ✅ | Phase 0 step 6, Phase 4a generate, UX brief, Rubric D |
 | R37 | **Requirement-change workflow** — capture & log → classify → impact-analysis (via Feature Tree) → update affected docs only (bump version) → re-run Phase 5 consistency → version & record | ✅ | Principle "living artifacts", "Iteration & version management" → Requirement-change workflow, Revision mode |
+| R38 | **Forms in dialogs/drawers** — create/edit uses the UI library's modal dialog / drawer pattern (full-page or wizard only for genuinely complex multi-step input); each form opens, validates, submits → toast | ✅ | Phase 4a item 4, "Verify by clicking through", Prototype catalog, UX brief, Rubric D "Forms use the library's dialog/drawer pattern" |
+| R39 | **Icon library** — settled in Phase 0 (the UI library's own icon set; an open library — Iconify / Lucide / Tabler / Heroicons — when the framework ships none; askable); prototype uses it purposefully, one consistent family, no emoji/text stand-ins | ✅ | Phase 0 step 4, Phase 4a item 6, Prototype catalog, UX brief, Rubric D "Icons from one library, used purposefully" |
 
 ## Working agreement
 - New requirements **improve this skill**, not the `crm-design-demo` example
   (the demo only validates the skill).
 
 ## Skill iteration log
+- **2026-06-19 · v1.11 — forms-in-dialogs & icon library.** Two prototype-quality
+  additions. (1) **Forms in dialogs/drawers**: Phase 4a item 4 now requires
+  create/edit forms to use the UI library's modal dialog / drawer pattern (full-page
+  or wizard reserved for genuinely complex multi-step input); the click-through
+  acceptance checklist gains "create/edit → form dialog opens, validates, submits →
+  toast"; mirrored in the Prototype catalog, the UX brief (form presentation rule),
+  and Rubric D. (2) **Icon library**: added to the Phase 0 step-4 tech-direction
+  decisions — default to the UI library's own icon set, else an open library
+  (Iconify / Lucide / Tabler / Heroicons), askable when the user has a preference;
+  Phase 4a gains item 6 requiring purposeful, single-family icon use (no emoji/text
+  stand-ins); carried into the Prototype catalog, the UX brief visual direction, and
+  Rubric D. READMEs (EN + 中文) Phase-0 summary notes the icon-lib choice.
+  (R38/R39)
 - **2026-06-19 · v1.10 — usage scenario, visual references & change workflow.**
   Three user-driven additions. (1) **Per-surface usage scenario + UI-aesthetic
   bar** asked in Phase 0 step 5: each in-scope surface declares what kind of

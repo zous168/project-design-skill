@@ -201,6 +201,17 @@ a quick sanity list alongside it. They mirror the same anti-slop principles
   **or** is recorded as an explicit, reasoned deferral. Flag any sub-system that's
   silently missing — a prototype that only shows one surface of a multi-surface
   product is incomplete.
+- **Forms use the library's dialog/drawer pattern.** Create/edit happens in a modal
+  dialog or drawer (the library's idiom — `el-dialog`/`el-drawer`, antd `Modal`/
+  `Drawer`), not an awkward full-page form for a simple record; a multi-step wizard
+  is reserved for genuinely complex input. Flag a create/edit flow that navigates
+  away to a bare page where a dialog/drawer is the expected pattern.
+- **Icons from one library, used purposefully.** Icons come from the chosen icon
+  library (the UI library's own set, or the agreed open library — Iconify / Lucide /
+  Tabler / Heroicons), one consistent family at consistent sizes, used to aid
+  scanning (nav, actions, status, empty states). Flag emoji or bare-text stand-ins
+  for icons, clashing icon sets, or a UI left visually flat for want of icons — and
+  conversely, icon clutter that decorates without informing.
 - **Interaction is click-verified (acceptance), not just present in code.** Every
   key interactive element was **actually exercised** and produced its expected
   effect: action buttons → dialogs/drawers, confirm → toast, row/card → drill-down/

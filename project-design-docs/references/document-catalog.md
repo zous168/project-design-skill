@@ -392,7 +392,9 @@ Include when the condition applies. Same structure discipline as above.
   non-trivial UI, and **always when the Prototype phase is in scope** (it's the
   spec the prototype is built from). Key flows, wireframe-level screen inventory
   (described), interaction & state rules (incl. the **empty / loading / error**
-  states), navigation map, accessibility, **responsive breakpoints** (the target
+  states and **form presentation** — modal dialog / drawer for create/edit, a
+  full-page or wizard only for genuinely complex multi-step input), navigation map,
+  accessibility, **responsive breakpoints** (the target
   devices and the breakpoint set — e.g. mobile ≤640, tablet 641–1024, desktop
   ≥1025 — plus how layout/nav reflows at each), **theme modes** (light / dark /
   follow-system, and where the toggle lives), **language switching** (default
@@ -403,9 +405,11 @@ Include when the condition applies. Same structure discipline as above.
   Phase 0) — because that decides not only the mood/palette but the **functional
   layout**: information density, navigation pattern, and how much screen goes to
   chrome vs content differ sharply between an efficiency-first internal console and
-  a brand-forward marketing site. Fold in any **reference material the user
-  provided** (mockups / 效果图, competitor screenshots, brand or style guide) and
-  the mood/brand constraints. Described in words/ASCII — no visual design assets in
+  a brand-forward marketing site. Name the **icon library** to use (the UI library's
+  own set, or a chosen open library — Iconify / Lucide / Tabler / Heroicons). Fold
+  in any **reference material the user provided** (mockups / 效果图, competitor
+  screenshots, brand or style guide) and the mood/brand constraints. Described in
+  words/ASCII — no visual design assets in
   this doc; the pixels live in the prototype. The breakpoints defined here are what
   the prototype's CSS must actually implement.
 - **Security Design** (dedicated) — *when* handling sensitive data, payments,
@@ -468,9 +472,12 @@ per-document loop. It belongs here only so the plan accounts for it.
 - **How it's built:** in the **actual chosen front-end stack** (e.g. Vite + Vue 3
   + Element Plus, or React + Ant Design) using its **real components**, structured
   as **pages + reusable components** (not one giant file), with a **mock-data**
-  module and **working interactions** (dialogs, toasts, drawers, empty/loading/
-  error). `frontend-design` informs the visual direction; the build uses the real
-  library. Scoped to MVP / key flows; each screen annotated with its FR IDs.
+  module and **working interactions** (**create/edit forms in modal dialogs /
+  drawers**, confirm dialogs, toasts, drill-down, empty/loading/error) and **icons
+  from the chosen icon library** (the UI library's own set, or an open library like
+  Iconify / Lucide when the framework ships none). `frontend-design` informs the
+  visual direction; the build uses the real library. Scoped to MVP / key flows;
+  each screen annotated with its FR IDs.
   Runs via `install + dev server` (state the command), **and ships a compiled
   preview** (`npm run build` → `dist/`, configured to open statically — Vite
   `base: './'` + hash routing) so reviewers can view the built HTML without the
