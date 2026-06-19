@@ -1,4 +1,15 @@
-# project-design-skill
+<h1 align="center">🧭 Project Design Skill</h1>
+
+<p align="center">
+  <b>Turn a one-line idea or a detailed brief into a complete, production-grade design set — no code.</b><br>
+  Devika-inspired pipeline · <code>create → review → optimize</code> · documents + a real interactive prototype
+</p>
+
+<p align="center">
+  <b>English</b> · <a href="README.zh-CN.md">中文</a>
+</p>
+
+---
 
 A Claude Code **skill** that turns a brief or detailed project requirement into a
 complete set of **production-grade analysis & design documents** — plus an
@@ -11,7 +22,7 @@ Patcher → Reporter): the "Coder" becomes a document **Writer**, the "Patcher"
 becomes an explicit **Reviewer**, and a **Prototype phase** (frontend-design +
 a visual-style "taste" review) is added.
 
-## What it produces
+## ✨ What it produces
 
 A versioned design set (each doc carries `doc_version` / `updated` / `status`):
 
@@ -35,7 +46,7 @@ an interactive **prototype** in the chosen front-end stack (real components,
 pages + components, mock data, working interactions, a compiled `dist/` preview);
 and `README` / `CHANGELOG` / `consistency-report` on assembly.
 
-## Pipeline
+## 🔄 Pipeline
 
 ```
 Phase 0 Intake & Clarify  → baseline + tech direction (FE/UI, BE, DB, architecture)
@@ -48,7 +59,7 @@ Phase 5 Consistency review→ cross-document + prototype coherence + traceabilit
 Phase 6 Assemble          → index, CHANGELOG, set version
 ```
 
-## Layout
+## 📁 Layout
 
 ```
 project-design-docs/
@@ -57,9 +68,12 @@ project-design-docs/
 └── references/
     ├── document-catalog.md       # the document library (01–14 + conditionals)
     └── review-rubrics.md         # content / logic / consistency / taste rubrics
+
+examples/
+└── crm-design-demo/              # a full worked example (CRM): docs 01–14 + Vue prototype
 ```
 
-## Install / use
+## 🚀 Install / use
 
 Copy the `project-design-docs/` folder into your Claude Code skills directory
 (e.g. `~/.claude/skills/`), or reference it from your project. Then ask Claude to
@@ -70,6 +84,6 @@ Optional companions used in the Prototype phase:
 - `taste` = `design-taste-frontend` — anti-slop visual-style review:
   `npx skills add Leonxlnx/taste-skill`.
 
-## License
+## 📄 License
 
 See [LICENSE](LICENSE).
