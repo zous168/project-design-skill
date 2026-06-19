@@ -73,9 +73,14 @@ examples/
 把 `project-design-docs/` 文件夹放进你的 Claude Code 技能目录(如 `~/.claude/skills/`),
 或在项目里引用。然后对 Claude 说 "创建项目 / 设计一个系统 / 写份方案 / 出一套设计",技能即触发。
 
-原型阶段用到的可选配套:
-- `frontend-design`(Anthropic 插件)—— UI 视觉方向。
-- `taste` = `design-taste-frontend` —— 反模板化样式审核:`npx skills add Leonxlnx/taste-skill`。
+## 🔌 依赖(可选 · 仅原型阶段)
+
+仅 **Phase 4(原型)** 用到;各有兜底,文档流水线两者都不需要。
+
+| 技能 | 用途 | 仓库 | 安装 |
+|------|------|------|------|
+| **frontend-design**(Anthropic) | UI 视觉方向(Phase 4a) | [anthropics/claude-plugins-public](https://github.com/anthropics/claude-plugins-public/tree/main/plugins/frontend-design) | Anthropic 插件市场(添加 `anthropics/claude-plugins-public` → 安装 `frontend-design`) |
+| **taste** = `design-taste-frontend`(Leonxlnx) | 反模板化样式审核(Phase 4b) | [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) | `npx skills add Leonxlnx/taste-skill` |
 
 ## 📄 许可
 

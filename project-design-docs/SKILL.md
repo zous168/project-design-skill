@@ -597,14 +597,17 @@ code — by design; everything else is code-free.)
   review checklists, plus the findings format and severity definitions. **Read it
   in Phase 3b (content/logic), Phase 4b (taste), and Phase 5 (consistency).**
 - `frontend-design` **skill** (external) — the UI generator used in Phase 4a.
-  Invoke it via the Skill tool to build the prototype; if it isn't enabled,
-  enable the `frontend-design` plugin or apply its principles directly.
-- `taste` **skill** = `design-taste-frontend` (external, https://www.tasteskill.dev/)
-  — the anti-slop design authority used for the Phase 4b **taste review**. Install
-  with `npx skills add Leonxlnx/taste-skill`, then invoke it via the Skill tool to
-  audit the prototype. It can also generate (Phase 4a) if you want one design
-  authority for both. Rubric D in `review-rubrics.md` is the manual fallback when
-  it can't be installed.
+- `taste` **skill** = `design-taste-frontend` (external) — the Phase 4b taste review.
+
+## Dependencies (external skills)
+
+Both are **optional** — only the **Prototype phase (Phase 4)** uses them, and each
+has a graceful fallback. The document pipeline (Phases 0–3, 5–6) needs neither.
+
+| Skill | Purpose | Git | Install | Fallback if absent |
+|-------|---------|-----|---------|--------------------|
+| **frontend-design** (Anthropic) | UI visual direction for the prototype (Phase 4a) | https://github.com/anthropics/claude-plugins-public (`plugins/frontend-design`) | Anthropic plugin marketplace: add `anthropics/claude-plugins-public`, install `frontend-design` | apply its design principles inline |
+| **taste** = `design-taste-frontend` (Leonxlnx) | Anti-slop visual-style review for the prototype (Phase 4b); can also generate landing/marketing screens | https://github.com/Leonxlnx/taste-skill | `npx skills add Leonxlnx/taste-skill` | **Rubric D** in `review-rubrics.md` (manual checklist) |
 
 ## Scope guardrails
 

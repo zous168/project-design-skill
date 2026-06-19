@@ -1,5 +1,5 @@
 ---
-doc_version: 9
+doc_version: 10
 updated: 2026-06-19
 status: reviewed
 ---
@@ -54,6 +54,12 @@ version frontmatter above, iteration log at the bottom.)
   (the demo only validates the skill).
 
 ## Skill iteration log
+- **2026-06-19 · v1.9 — dependency sources documented.** Added a **Dependencies
+  (external skills)** section to SKILL.md with git URLs + install + fallback for
+  the two optional Phase-4 skills — `frontend-design`
+  (github.com/anthropics/claude-plugins-public) and `taste` =
+  `design-taste-frontend` (github.com/Leonxlnx/taste-skill); mirrored in the repo
+  README (EN + 中文).
 - **2026-06-19 · v1.8 — module layer on both stacks.** 工程结构文档(10):大型子系统
   的**前端与后端都要 module-first**(`modules/<module>/` 自包含,对齐功能树/架构模块
   边界);小型可类型优先,需说明。Rubric C 增「Module alignment」跨文档校验。(R34)

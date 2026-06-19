@@ -79,10 +79,15 @@ Copy the `project-design-docs/` folder into your Claude Code skills directory
 (e.g. `~/.claude/skills/`), or reference it from your project. Then ask Claude to
 "创建项目 / design a system / write a spec / 出一套设计方案" and the skill triggers.
 
-Optional companions used in the Prototype phase:
-- `frontend-design` (Anthropic plugin) — UI visual direction.
-- `taste` = `design-taste-frontend` — anti-slop visual-style review:
-  `npx skills add Leonxlnx/taste-skill`.
+## 🔌 Dependencies (optional — Prototype phase only)
+
+Only **Phase 4 (Prototype)** uses these; each has a graceful fallback, and the
+document pipeline needs neither.
+
+| Skill | Purpose | Repo | Install |
+|-------|---------|------|---------|
+| **frontend-design** (Anthropic) | UI visual direction (Phase 4a) | [anthropics/claude-plugins-public](https://github.com/anthropics/claude-plugins-public/tree/main/plugins/frontend-design) | Anthropic plugin marketplace (`anthropics/claude-plugins-public` → install `frontend-design`) |
+| **taste** = `design-taste-frontend` (Leonxlnx) | Anti-slop visual-style review (Phase 4b) | [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) | `npx skills add Leonxlnx/taste-skill` |
 
 ## 📄 License
 
