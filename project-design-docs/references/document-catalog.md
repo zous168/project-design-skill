@@ -396,12 +396,18 @@ Include when the condition applies. Same structure discipline as above.
   devices and the breakpoint set — e.g. mobile ≤640, tablet 641–1024, desktop
   ≥1025 — plus how layout/nav reflows at each), **theme modes** (light / dark /
   follow-system, and where the toggle lives), **language switching** (default
-  user-language + English, with a placement for the switch), and any visual
-  direction (mood, references, brand constraints) to hand to the prototype
-  generator. Described in
-  words/ASCII — no visual design assets in this doc; the pixels live in the
-  prototype. The breakpoints defined here are what the prototype's CSS must
-  actually implement.
+  user-language + English, with a placement for the switch), and the **visual
+  direction** to hand to the prototype generator. The visual direction must state,
+  **per surface, its usage-scenario type (admin console / utility tool / marketing
+  site / data dashboard / mobile app…) and its UI-aesthetic bar** (settled in
+  Phase 0) — because that decides not only the mood/palette but the **functional
+  layout**: information density, navigation pattern, and how much screen goes to
+  chrome vs content differ sharply between an efficiency-first internal console and
+  a brand-forward marketing site. Fold in any **reference material the user
+  provided** (mockups / 效果图, competitor screenshots, brand or style guide) and
+  the mood/brand constraints. Described in words/ASCII — no visual design assets in
+  this doc; the pixels live in the prototype. The breakpoints defined here are what
+  the prototype's CSS must actually implement.
 - **Security Design** (dedicated) — *when* handling sensitive data, payments,
   auth-heavy, or regulated. Threat model (e.g. STRIDE), trust boundaries, data
   protection at rest/in transit, secrets/key management, authz model, audit.

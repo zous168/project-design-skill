@@ -1,5 +1,5 @@
 ---
-doc_version: 10
+doc_version: 11
 updated: 2026-06-19
 status: reviewed
 ---
@@ -48,12 +48,32 @@ version frontmatter above, iteration log at the bottom.)
 | R32 | **Prototype covers every in-scope sub-system** (admin/website/app/…) or records an explicit, reasoned deferral — no silent omission | ✅ | Phase 4a item 1, Rubric D "Sub-system coverage", Rubric C feature-tree coverage |
 | R33 | **Interaction acceptance by click-through** — each interactive element actually clicked & its effect confirmed (checklist in prototype-notes), via preview/browser tools | ✅ | Phase 4 "Verify by clicking through", Rubric D "Interaction is click-verified" |
 | R34 | **Module layer on both stacks for large sub-systems** — front-end & back-end organized module-first (self-contained `modules/<module>/`), small may stay type-first | ✅ | Doc 10 items 1–3 + bar, Rubric C "Module alignment" |
+| R35 | **Per-surface usage-scenario type + UI-aesthetic bar** asked in Phase 0 (tool / admin console / marketing site / dashboard / mobile) — drives the **visual direction** (which generator leads) **and the functional layout** (density, nav, chrome-vs-content) | ✅ | Phase 0 step 5, 00-PROGRESS template, UX brief, Rubric D "Calibrated to the surface's aesthetic bar" |
+| R36 | **Ask the user for visual references / 效果图** in Phase 0 (mockups, competitor screenshots, brand/style guide) — recorded in the baseline, fed into prototype generation + UX brief visual direction | ✅ | Phase 0 step 6, Phase 4a generate, UX brief, Rubric D |
+| R37 | **Requirement-change workflow** — capture & log → classify → impact-analysis (via Feature Tree) → update affected docs only (bump version) → re-run Phase 5 consistency → version & record | ✅ | Principle "living artifacts", "Iteration & version management" → Requirement-change workflow, Revision mode |
 
 ## Working agreement
 - New requirements **improve this skill**, not the `crm-design-demo` example
   (the demo only validates the skill).
 
 ## Skill iteration log
+- **2026-06-19 · v1.10 — usage scenario, visual references & change workflow.**
+  Three user-driven additions. (1) **Per-surface usage scenario + UI-aesthetic
+  bar** asked in Phase 0 step 5: each in-scope surface declares what kind of
+  product it is (utility tool / admin console / marketing site / dashboard /
+  mobile) and how much polish it needs — this drives both the **visual direction**
+  (which prototype generator leads) and the **functional layout** (information
+  density, nav pattern, chrome-vs-content); recorded in the baseline, carried into
+  the UX brief, and made a calibration criterion in Rubric D so a deliberately
+  utilitarian console isn't judged by marketing-site polish. (2) **Visual
+  references / 效果图** requested from the user in a new Phase 0 step 6 (mockups,
+  competitor screenshots, brand/style guide), recorded in the baseline and fed into
+  Phase 4a generation + the UX brief — the strongest anchor against a templated
+  default. (3) **Requirement-change workflow** added to *Iteration & version
+  management*: capture & log → classify → impact-analysis (via the Feature Tree) →
+  update affected docs only (bump version) → re-run Phase 5 consistency → version &
+  record; the "living artifacts" principle now points at it. READMEs (EN + 中文)
+  Phase-0 summary updated. (R35/R36/R37)
 - **2026-06-19 · v1.9 — dependency sources documented.** Added a **Dependencies
   (external skills)** section to SKILL.md with git URLs + install + fallback for
   the two optional Phase-4 skills — `frontend-design`

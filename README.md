@@ -50,7 +50,8 @@ and `README` / `CHANGELOG` / `consistency-report` on assembly.
 
 ```
 Phase 0 Intake & Clarify  → baseline + tech direction (FE/UI, BE, DB, architecture)
-                            + sub-systems + roles + defaults (theme/i18n/responsive)
+                            + sub-systems (type · aesthetic bar · visual refs)
+                            + roles + defaults (theme/i18n/responsive)
 Phase 1 Plan              → which docs + whether to prototype (per sub-system)
 Phase 2 Research          → focused, keyword-driven (conditional)
 Phase 3 Draft→Review→Optimize, per document

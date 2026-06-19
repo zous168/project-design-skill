@@ -161,6 +161,13 @@ a quick sanity list alongside it. They mirror the same anti-slop principles
   for it*, that's a finding — name what's generic and what it should become.
 - **Grounded in the subject.** The palette, imagery, and vocabulary come from
   this product's actual world and audience, not generic stock choices.
+- **Calibrated to the surface's aesthetic bar.** Judge against the surface's
+  declared usage-scenario type and UI-aesthetic bar (Phase 0). An efficiency-first
+  internal console is held to *information density, clarity, and scannability*, not
+  to marketing-site polish; a brand-forward public site is held to distinctiveness
+  and craft. "Deliberate, not templated" applies to both — but don't ding a utility
+  tool for being quiet, and don't pass a marketing page just because it's tidy. If
+  the user supplied reference material, check the result honours its direction.
 - **Typography has personality.** Display and body faces are paired deliberately
   with a real type scale; type is a designed element, not a neutral delivery of
   text.

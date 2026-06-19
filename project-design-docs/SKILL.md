@@ -81,8 +81,10 @@ validated as something you can look at, not only read.
   states.
 - **Design docs are living, versioned artifacts.** A design set isn't written
   once — it's revised as the project evolves. Version every document, keep a
-  changelog, and re-run incrementally (see *Iteration & version management*) so
-  each iteration is trackable and you never silently overwrite an approved doc.
+  changelog, and handle each requirement change as a controlled flow — capture →
+  impact-analysis → update affected docs → re-validate (see the *Requirement-change
+  workflow* under *Iteration & version management*) — so each iteration is
+  trackable and you never silently overwrite an approved doc.
 - **Work in independently-verifiable slices, gated.** Don't try to produce the
   whole set (or whole sub-system) in one undifferentiated pass. Each document — and
   each sub-system — is a slice that goes through its own create → review → optimize
@@ -159,17 +161,43 @@ is written.
    real products are several surfaces: an **admin / back-office console**, a
    **public website / marketing site**, a **mobile app**, an **open API** for
    partners, etc. Ask which ones are in scope — it changes the screen inventory,
-   the architecture, and the structure. For a **complex, multi-sub-system**
-   product, **decompose**: produce a top-level system overview, then design each
-   sub-system as its own task (its own screens, feature tree, and where needed its
-   own doc folder). This is the Devika-style "break the big thing into steps"
-   move — it keeps each part coherent and reviewable instead of one sprawling
-   blur. Also confirm the **responsive targets** (which devices must be supported,
-   and the breakpoints) since that's a real design constraint, not an afterthought.
-6. **Write the baseline.** Create the output folder (default
+   the architecture, and the structure. **For each in-scope surface, also pin down
+   its *usage scenario* and its *UI-aesthetic bar*** — a productivity/utility tool,
+   an internal admin/back-office console, a brand-forward public website, a data
+   dashboard, and a consumer mobile app have very different design centres of
+   gravity. Use `AskUserQuestion` to settle, per surface: **what kind of product it
+   is** and **how much visual polish it needs** (e.g. *functional & information-
+   dense — efficiency over beauty* for an internal console, vs *brand-forward &
+   highly polished* for a marketing site). Batch this into the **same
+   `AskUserQuestion` round as the in-scope question** (respect the ≤4-per-round
+   rule from step 3) — don't open a fresh interrogation; for a single-surface
+   product it's only an extra question or two. This decision drives two things: the
+   **visual direction** — which prototype generator leads (`taste` for marketing /
+   landing surfaces, `frontend-design` for product UI; see Phase 4) — and the
+   **functional layout** (information density, navigation pattern, how much screen
+   goes to chrome vs content). Record the per-surface type + aesthetic bar in the
+   baseline. For a **complex, multi-sub-system** product, **decompose**: produce a
+   top-level system overview, then design each sub-system as its own task (its own
+   screens, feature tree, and where needed its own doc folder). This is the
+   Devika-style "break the big thing into steps" move — it keeps each part coherent
+   and reviewable instead of one sprawling blur. Also confirm the **responsive
+   targets** (which devices must be supported, and the breakpoints) since that's a
+   real design constraint, not an afterthought.
+6. **Ask for visual references — don't design the look blind.** When any surface is
+   user-facing, ask the user whether they can share **reference material that
+   anchors the look**: mockups or effect images (效果图) they already have,
+   screenshots of products/competitors whose feel they want, a brand / style guide
+   or an existing design system, or even a few "like this, not that" examples.
+   Accept links, attached images, or descriptions. Record what they give — or note
+   "none provided — direction inferred from the product type + aesthetic bar" — in
+   the baseline; these references feed the UX brief's visual direction and the
+   Phase 4 prototype generator (`frontend-design` / `taste`). A concrete reference
+   is the single best defence against a generic, templated result.
+7. **Write the baseline.** Create the output folder (default
    `./<project-slug>-design/`) and write `00-PROGRESS.md` (template below)
    containing: the restated requirement, the agreed scope, the **chosen tech
-   direction**, the **sub-systems in scope**, the **roles** (formalized later in
+   direction**, the **sub-systems in scope** (each with its usage-scenario type,
+   UI-aesthetic bar, and any visual references), the **roles** (formalized later in
    the requirements doc 01), the **defaults in force** (theme modes, i18n
    languages, responsive targets — note any the user excluded), the assumptions
    log, and the open-questions list.
@@ -268,8 +296,12 @@ the **taste** review (visual style), and the artifact is code, not prose.
 **4a — Generate.** Build the prototype using the **`frontend-design`** skill for
 visual direction (palette, type, layout) and the **chosen framework's real
 components** for the build itself. Don't start from a blank brief — ground it in
-the work already done. These points make the difference between a real prototype
-and a toy:
+the work already done, including **the visual references the user supplied and
+each surface's declared aesthetic bar** (Phase 0): a brand-forward marketing
+surface and an efficiency-first internal console should look and lay out
+differently, and a provided reference image is the strongest anchor against a
+templated default. These points make the difference between a real prototype and a
+toy:
 
 1. **List the screen inventory first, then build each — across every in-scope
    sub-system.** Derive the screens from the functional modules in the
@@ -437,6 +469,38 @@ A design set is a living artifact — requirements change, scope shifts, the
 prototype surfaces issues. Make every iteration trackable so nothing is silently
 overwritten and a reviewer can see what changed.
 
+**Requirement-change workflow.** Requirements *will* change after the baseline is
+set — a new scenario, a dropped feature, a shifted constraint. Handle every change
+as a controlled flow, not an ad-hoc edit, so nothing drifts out of sync:
+
+1. **Capture & log.** Record the change request itself — what's changing, who asked,
+   and why — as a dated row in the `00-PROGRESS.md` review trail (and an open item
+   if it isn't agreed yet). Don't start editing until the change is written down.
+   The *resolved* change is what lands in `CHANGELOG.md` at step 6 — that file is
+   version-keyed (`## v1.x — date`), so it holds released changes, not pending
+   requests.
+2. **Classify.** Minor (wording, an added field, a clarified rule) vs major (a new
+   scenario, a scope / architecture / stack shift, a new sub-system). This sets the
+   version bump (see *Bump rules*) and how wide the blast radius is.
+3. **Impact analysis — trace before you touch.** Walk from the change to every
+   affected artifact, using the **Feature Tree (04)** as the index: which FRs,
+   feature-tree nodes, entities/fields, API endpoints, async tasks, NFRs, tests,
+   and prototype screens does it touch? List them *before* editing — a requirement
+   change almost always ripples well past the requirements doc.
+4. **Update the affected docs only.** Re-run each affected document through its
+   create → review → optimize loop; bump its `doc_version` + `updated`; leave
+   untouched docs exactly as they are (don't churn approved content). Update the
+   prototype if a touched screen/flow changed.
+5. **Re-validate the whole set.** **Always re-run the Phase 5 consistency review** —
+   a local change is exactly how cross-document coherence breaks (a field the API
+   now references, a renamed flow, a role that gained an operation).
+6. **Version & record.** Append the resolved change to `CHANGELOG.md` with the new
+   set version and the driver, and refresh the README revision-history table
+   (Phase 6).
+
+This uses the same machinery as *Revision mode* below — the workflow is just the
+disciplined order to apply it in when a requirement moves.
+
 **Per-document version frontmatter.** Every generated doc opens with:
 ```yaml
 ---
@@ -538,6 +602,7 @@ code — by design; everything else is code-free.)
 **Set version:** v1.0  (see CHANGELOG.md)
 **Requirement (restated):** <one paragraph>
 **Scope (agreed):** <in-scope bullets> / **Out of scope:** <bullets>
+**Sub-systems:** <surface — usage-scenario type (admin / tool / website / mobile…) · UI-aesthetic bar · visual references or "none">
 **Defaults in force:** theme(light/dark/auto) · i18n(zh+en) · responsive(…)  — note any excluded
 
 ## Assumptions (need user confirmation)
