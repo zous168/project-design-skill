@@ -86,22 +86,30 @@ Contents:
 
 ### 04 — Feature Tree (功能树)
 - **Purpose:** the hierarchical map of everything the system does —
-  **sub-system → module → page → operation** — so the design is reviewable at a
-  glance and nothing slips. It's the master coverage checklist that the prototype,
-  the API inventory, and the tests are all cross-checked against.
+  **sub-system → module → page → display + operation** — so the design is reviewable
+  at a glance and nothing slips. It's the master coverage checklist that the
+  prototype, the API inventory, and the tests are all cross-checked against.
 - **Upstream:** 01 (FRs + roles), 03 (sub-systems & modules).
 - **Structure:**
   1. The tree itself: per sub-system → its modules → each module's pages/screens →
-     each page's operations (the actions a user can take).
-  2. Each leaf **operation** annotated with: the **role(s)** allowed (from 01),
-     the **FR id(s)** it satisfies, and — once known — the **API endpoint(s)** and
-     **prototype screen** it maps to.
+     and under each page **both what it displays** (the data the screen shows /
+     reads — lists, detail, metrics, lookups) **and its operations** (the actions a
+     user can take). Capturing display *and* action — not operations alone — is what
+     lets the API design derive every **read** endpoint a page needs, not just the
+     write endpoints (this feeds the page→interface map in doc 06).
+  2. Each leaf — a **display item or an operation** — annotated with: the
+     **role(s)** allowed (from 01), the **FR id(s)** it satisfies, and — once known —
+     the **API endpoint(s)** it maps to (a display item → its **read/query
+     endpoint**, an operation → its **action endpoint**) and the **prototype
+     screen**.
   3. Rendered as an indented list or a table so a reviewer can tick coverage
      line by line.
 - **Production-grade bar:** every FR appears somewhere in the tree; every leaf
-  operation has a role and (eventually) an endpoint + screen; the tree matches the
-  prototype's screen inventory and the API inventory with **no orphans**. This is
-  the artifact the consistency review (Phase 5) checks the whole design against.
+  (display item or operation) has a role and (eventually) an endpoint + screen —
+  each page's display data mapping to a **read** endpoint and each operation to an
+  **action** endpoint; the tree matches the prototype's screen inventory and the API
+  inventory with **no orphans**. This is the artifact the consistency review
+  (Phase 5) checks the whole design against.
 
 ### 05 — Data Design
 - **Purpose:** the data the system holds and how it's structured — **as models,
@@ -147,10 +155,19 @@ Contents:
      sub-resource or a clearly-named verb path (`POST /opportunities/{id}/close`).
      Deviate from REST only with a **stated reason** (e.g. a streaming/RPC need);
      event/queue interfaces belong in the async doc (07), not here.
-  2. **API inventory outline** — the full endpoint list grouped by module/resource,
-     as a table (**method · path · summary · module · auth · role**), so the whole
-     surface is reviewable at a glance before any detail. It must line up with the
-     feature tree's operations.
+  2. **API inventory — derived page-by-page.** First build a **Page → interface
+     map**: walk each page/screen in the feature tree and list what it **displays**
+     (the data it reads — lists, detail, metrics, dictionary/lookup) → the
+     **read/query endpoints** it needs, and the **operations** it offers
+     (create / edit / delete / state-change / export…) → the **action endpoints** —
+     as a table of *page · display-or-operation · type (display / action) ·
+     endpoint(s) · role*. Then roll those up into the **full endpoint inventory**
+     grouped by module/resource (**method · path · summary · module · auth · role**),
+     reviewable at a glance. Deriving the surface from each page's real display +
+     action needs — not only from the feature tree's operations — is what makes it
+     **complete**: it catches the read / query / lookup endpoints an operation-only
+     inventory misses. The inventory must line up with both the feature tree and the
+     page→interface map.
   3. Per endpoint/operation: purpose, inputs, outputs, key fields, status/errors,
      idempotency & auth — as tables, **not code**.
   4. **OpenAPI / Swagger** — the API is specified as an **OpenAPI (Swagger)
@@ -167,8 +184,10 @@ Contents:
   (resources, verbs, status codes, versioning) with any deviation justified; field
   names and types match the data model exactly; a consistent error model covers
   the whole surface; auth and versioning are specified; an **OpenAPI spec is
-  produced and Swagger UI enabled**; the inventory matches the feature tree's
-  operations (every operation that needs an endpoint has one, and vice versa).
+  produced and Swagger UI enabled**; the inventory is **derived from the
+  page→interface map** and matches the feature tree — every page's display data has
+  a read/query endpoint and every operation has an action endpoint, and conversely
+  no endpoint is an orphan.
 
 ### 07 — Async / Background Processing Design
 - **Purpose:** how work that *isn't* in the synchronous request/response path gets

@@ -100,10 +100,13 @@ that per-document review structurally cannot.
   don't contradict (e.g. consistency model, sync vs async, datastore choice vs
   data shape, security posture vs deployment).
 - **Feature-tree coverage** — the **Feature Tree is the master checklist**: every
-  leaf operation has a role, an FR, an API endpoint, and (if prototyped) a screen;
-  conversely every prototype screen and API endpoint appears in the tree. Walk the
-  tree and flag any operation missing one of these, and any screen/endpoint not in
-  the tree.
+  leaf (display item or operation) has a role, an FR, an API endpoint, and (if
+  prototyped) a screen; **each page's display/data maps to a read/query endpoint and
+  each operation to an action endpoint** — walk every page's *display + operations*,
+  not operations alone, since that's what surfaces missing read endpoints; conversely
+  every prototype screen and API endpoint appears in the tree. Flag any display
+  lacking a read endpoint, any operation lacking an action endpoint, and any
+  screen/endpoint not in the tree.
 - **Roles consistency** — the roles in requirements, the role column of the
   feature tree, and the auth/role on each API endpoint agree; no operation is
   reachable by a role the requirements don't grant it.

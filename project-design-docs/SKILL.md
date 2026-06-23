@@ -376,8 +376,11 @@ toy:
    clashing icon sets.
 
 Pull content from finished upstream docs (entities/fields from the data design so
-forms/lists show realistic mock content, not lorem ipsum). Annotate each screen
-with the requirement IDs (FR-…) it realizes so the prototype stays traceable.
+forms/lists show realistic mock content, not lorem ipsum), and make each screen's
+**displayed data and actions correspond to the endpoints in the page→interface map
+(doc 06)** — the prototype is where that map gets validated against a real screen,
+surfacing any read or action endpoint the API design still misses. Annotate each
+screen with the requirement IDs (FR-…) it realizes so the prototype stays traceable.
 
 > **Fallback:** if no framework was chosen (quick concept, or a pure
 > landing/marketing page), a single-file or static `index.html` + shared

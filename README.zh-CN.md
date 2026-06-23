@@ -30,7 +30,7 @@ Reporter):把 "Coder" 变为文档 **Writer**、"Patcher" 变为显式 **Reviewe
 | 03 | 系统架构(含子系统分解、ADR) |
 | 04 | 功能树(子系统 → 模块 → 页面 → 操作) |
 | 05 | 数据设计(cfg / data / logs / stats) |
-| 06 | 接口设计(REST + OpenAPI/Swagger) |
+| 06 | 接口设计(REST + OpenAPI/Swagger、页面→接口映射) |
 | 07 | 异步 / 后台处理(job / 异步 / 调度) |
 | 08 | 非功能性需求(含 i18n / 主题 / 响应式) |
 | 09 | 技术选型 |

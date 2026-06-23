@@ -1,5 +1,5 @@
 ---
-doc_version: 12
+doc_version: 13
 updated: 2026-06-19
 status: reviewed
 ---
@@ -53,12 +53,26 @@ version frontmatter above, iteration log at the bottom.)
 | R37 | **Requirement-change workflow** — capture & log → classify → impact-analysis (via Feature Tree) → update affected docs only (bump version) → re-run Phase 5 consistency → version & record | ✅ | Principle "living artifacts", "Iteration & version management" → Requirement-change workflow, Revision mode |
 | R38 | **Forms in dialogs/drawers** — create/edit uses the UI library's modal dialog / drawer pattern (full-page or wizard only for genuinely complex multi-step input); each form opens, validates, submits → toast | ✅ | Phase 4a item 4, "Verify by clicking through", Prototype catalog, UX brief, Rubric D "Forms use the library's dialog/drawer pattern" |
 | R39 | **Icon library** — settled in Phase 0 (the UI library's own icon set; an open library — Iconify / Lucide / Tabler / Heroicons — when the framework ships none; askable); prototype uses it purposefully, one consistent family, no emoji/text stand-ins | ✅ | Phase 0 step 4, Phase 4a item 6, Prototype catalog, UX brief, Rubric D "Icons from one library, used purposefully" |
+| R40 | **Page → interface mapping** — for each page map its **display/data** (→ read/query endpoints) **and operations** (→ action endpoints) to concrete APIs, so the API surface is derived from real page needs and is **complete** (read/query/lookup endpoints not missed) | ✅ | Doc 04 (display + operations under each page), Doc 06 item 2 "API inventory — derived page-by-page" + bar, Rubric C "Feature-tree coverage", Phase 4a (prototype validates the map) |
 
 ## Working agreement
 - New requirements **improve this skill**, not the `crm-design-demo` example
   (the demo only validates the skill).
 
 ## Skill iteration log
+- **2026-06-19 · v1.12 — page → interface mapping (completeness).** Make the API
+  design derive from **each page's display + operation needs**, not operations
+  alone. (1) Feature Tree (04): each page node now captures **both what it displays**
+  (data it reads — lists, detail, metrics, lookups) **and its operations**; each
+  leaf (display item or operation) maps to a read/query or action endpoint. (2)
+  Interface design (06) item 2 reframed as **"API inventory — derived page-by-page"**:
+  build a **Page → interface map** (page · display-or-operation · type · endpoint ·
+  role) first, then roll up the full inventory — this catches the read/query/lookup
+  endpoints an operation-only inventory misses; bar updated. (3) Rubric C
+  feature-tree coverage now walks each page's *display + operations* and flags any
+  display lacking a read endpoint. (4) Phase 4a: each prototype screen's displayed
+  data + actions must correspond to the page→interface map, validating it against a
+  real screen. READMEs note the page→endpoint map on doc 06. (R40)
 - **2026-06-19 · v1.11 — forms-in-dialogs & icon library.** Two prototype-quality
   additions. (1) **Forms in dialogs/drawers**: Phase 4a item 4 now requires
   create/edit forms to use the UI library's modal dialog / drawer pattern (full-page

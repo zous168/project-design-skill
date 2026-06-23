@@ -33,7 +33,7 @@ A versioned design set (each doc carries `doc_version` / `updated` / `status`):
 | 03 | System Architecture (+ sub-system decomposition, ADRs) |
 | 04 | Feature Tree (sub-system → module → page → operation) |
 | 05 | Data Design (cfg / data / logs / stats) |
-| 06 | Interface / API Design (REST + OpenAPI/Swagger) |
+| 06 | Interface / API Design (REST + OpenAPI/Swagger, page→endpoint map) |
 | 07 | Async / Background Processing (jobs, async tasks, scheduled) |
 | 08 | Non-Functional Requirements (incl. i18n / theming / responsive) |
 | 09 | Technology Selection |
