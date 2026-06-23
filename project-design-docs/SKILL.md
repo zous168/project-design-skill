@@ -305,8 +305,10 @@ the work already done, including **the visual references the user supplied and
 each surface's declared aesthetic bar** (Phase 0): a brand-forward marketing
 surface and an efficiency-first internal console should look and lay out
 differently, and a provided reference image is the strongest anchor against a
-templated default. These points make the difference between a real prototype and a
-toy:
+templated default. Build it to **production standards** — the real framework, a
+production-style structure, and data behind a **swappable source** — so it's a
+faithful starting point, not a throwaway demo. These points make the difference
+between a real prototype and a toy:
 
 1. **List the screen inventory first, then build each — across every in-scope
    sub-system.** Derive the screens from the functional modules in the
@@ -341,9 +343,22 @@ toy:
 3. **Structure as pages + reusable components.** Don't put everything in one giant
    file — it gets unmaintainable and unreviewable. Split into **views/pages**
    (one per screen, matched to the feature tree) and **reusable components**
-   (shell/nav, KPI strip, tables, the bits shared across pages), with a router and
-   a mock-data module. This mirrors the real project structure (doc 10) and keeps
-   each file small.
+   (shell/nav, KPI strip, tables, the bits shared across pages), with a **router
+   whose route tree covers every screen — including nested / child routes**
+   (master→detail, tabbed sub-sections), **each route resolving to a real implemented
+   page** (no placeholder routes, no page left unrouted), and a
+   **data-access layer** organized in three parts: an **`apiClient`** (the one
+   configured HTTP client — base URL, interceptors, a **unified auth layer** that
+   attaches the **token** (`Authorization: Bearer …`) from a token store and handles
+   **401 → refresh / redirect to login**, and a consistent error envelope — the
+   single swap point), **one API module per resource** (`api/<module>.js`,
+   grouping that module's calls), and an **aggregate `api`** index (`api/index.js`)
+   that composes the modules. Views and components **import the aggregate `api` and
+   call `api.<module>.<method>(args)`** — e.g. `api.leads.list(params)`,
+   `api.opportunities.close(id, payload)` — never a raw `fetch`/`axios` in a
+   component, and never the mock fixtures directly. The **mock data sits behind
+   `apiClient` as a swappable source**. This mirrors the real project structure
+   (doc 10) and keeps each file small.
 4. **Mock data, but real interaction.** Use mock/fixture data (no backend), yet
    the interactions must work: **confirm/modal dialogs** on gated or destructive
    actions, **toast/notification** feedback, **drawers/popovers** where the
@@ -374,6 +389,26 @@ toy:
    states — for clarity and a polished look, **one consistent family at consistent
    sizes**. Don't substitute emoji or text glyphs for real icons, and don't mix
    clashing icon sets.
+7. **Build to production standards — mock behind a swappable data source.** The
+   prototype isn't throwaway: build it to the **same engineering standards as
+   production** so it can become the real front-end. Route **all data access through
+   the aggregate `api` → per-module methods → `apiClient`**, with the **mock wired in
+   behind `apiClient`** (or as the api modules' current implementation), returning
+   exactly the shapes the **page→interface map (doc 06)** documents — same fields,
+   types, pagination, and error envelope; **each api method corresponds to a doc-06
+   endpoint**. Then **going to real development is switching the data source at
+   `apiClient`** (point it at the live `/api/v1`) — the call sites stay
+   `api.<module>.<method>(args)`, unchanged — **rather than a rewrite**. The
+   **auth / token mechanism lives in `apiClient`** the same way — a request
+   interceptor **attaches the token** and a **401 handler** refreshes it or routes to
+   login — **framework-idiomatic** (e.g. an axios interceptor + a Pinia/Vuex auth
+   store in Vue; a fetch wrapper + context/store in React) and wired with a **mock
+   token / mock login** in the prototype; production swaps in the real token endpoint.
+   This is production *standard*, not production *scope*: it stays front-end-only,
+   mock-data, MVP-scoped — don't add a backend, a **real auth/identity provider**, or
+   features beyond the key flows (the apiClient **token plumbing with a mock token is
+   expected**; a real IdP / login backend is not); the discipline is in the
+   *structure*, not extra features.
 
 Pull content from finished upstream docs (entities/fields from the data design so
 forms/lists show realistic mock content, not lorem ipsum), and make each screen's
@@ -387,21 +422,33 @@ screen with the requirement IDs (FR-…) it realizes so the prototype stays trac
 > `app.css`/`app.js` is fine and opens with a double-click. Reserve it for that
 > case; for a product with a settled stack, prefer the real framework.
 
-**Verify by clicking through — interaction acceptance, not just "it renders."**
-Run the prototype and **actually click every key interactive element**, confirming
-the expected effect — don't accept it by eyeballing a screenshot. Build an
-**interaction acceptance checklist** in `prototype-notes.md`: one row per
-interactive element with its expected result, ticked when exercised. At minimum,
-per screen: each **action button → its dialog/drawer opens**; **create/edit →
-form dialog opens, validates, submits → toast fires**; **confirm → toast/feedback
-fires**; **list row / card → drills into detail / navigates**; **tabs, filters,
-segmented, theme & language toggles → switch**; the **empty / loading / error**
-states are reachable. Drive the clicks with the browser/preview tools
-(`preview_click` / `preview_eval`) so acceptance is evidence, not assertion.
-Also: run across the declared **responsive breakpoints**, and confirm the compiled
-`dist/` opens **statically** (no dev server) and still renders + interacts. A
-prototype whose interactions weren't click-verified — or whose compiled preview is
-blank (usually wrong `base`/router mode) — isn't accepted.
+**Verify by clicking through — structure-driven acceptance, not just "it renders."**
+**Start from the structure, not a random click-around.** First enumerate the
+**route tree** — top-level routes and **every nested / child route** (master→detail,
+tabbed sub-sections) — and confirm **each route resolves to a real, implemented
+page** (no route 404s, no placeholder/empty page, no page built but unrouted). Then
+walk that tree: for each page, take its **operations and the data structures they act
+on** (from the feature tree + page→interface map + data design) and verify each is
+actually wired. Run the prototype and **actually click every key interactive
+element**, confirming the expected effect — don't accept it by eyeballing a
+screenshot. Build a **structure-driven acceptance checklist** in
+`prototype-notes.md`, organized **route → page → element**: one row per interactive
+element with its expected result, ticked when exercised. At minimum, per page: each
+**route / sub-route → its page renders**; **tab / segmented → its panel switches and
+loads**; each **action button → its dialog/drawer opens**; **create/edit → form
+dialog opens, validates, submits → toast fires**; **confirm → toast/feedback fires**;
+**list row / card → drills into detail / navigates**; **state / status toggle → the
+state actually changes and reflects back**; **filters, theme & language toggles →
+switch**; the **empty / loading / error** states are reachable. **No dead ends** —
+every route, sub-route, tab, button, and state toggle must reach a real front-end
+implementation; a control that renders but does nothing (dead link, dead tab, inert
+button, non-switching toggle) is a defect, not a stub. Drive the clicks with the
+browser/preview tools (`preview_click` / `preview_eval`) so acceptance is evidence,
+not assertion. Also: run across the declared **responsive breakpoints**, and confirm
+the compiled `dist/` opens **statically** (no dev server) and still renders +
+interacts. A prototype with a **dead route, unrouted page, dead tab, inert button, or
+non-switching toggle** — whose interactions weren't click-verified — or whose compiled
+preview is blank (usually wrong `base`/router mode) — isn't accepted.
 
 > If `frontend-design` isn't enabled, enable the `frontend-design` plugin or
 > apply its principles directly. **Choosing the generator by screen type:** the
@@ -596,7 +643,12 @@ date, one-line summary) and sets the current set version.
     # ── framework build (preferred when a stack was chosen) ──
     ├── package.json  vite.config.js  index.html   # dev: npm install && npm run dev
     ├── src/
-    │   ├── main.js  router/  mock/  styles/
+    │   ├── main.js  router/  styles/
+    │   ├── api/                   # data-access layer
+    │   │   ├── client.js          #   apiClient — base URL, interceptors, auth/token (attach Bearer, handle 401), error envelope (swap point)
+    │   │   ├── <module>.js        #   per-resource api modules (leads, opportunities…)
+    │   │   └── index.js           #   aggregate `api` → views call api.<module>.<method>(args)
+    │   ├── mock/                  # mock source behind apiClient — swap for the real backend
     │   ├── components/            # reusable: shell/nav, KPI strip, tables…
     │   └── views/                 # one page per screen (matches the feature tree)
     └── dist/                      # compiled preview (npm run build) — opens statically, no dev server
@@ -705,10 +757,16 @@ has a graceful fallback. The document pipeline (Phases 0–3, 5–6) needs neith
   diagrams (Mermaid/ASCII) are fine and encouraged.
 - **The prototype is the one intentional exception.** Phase 4 produces a runnable
   front-end prototype — a real project in the chosen framework (or static HTML for
-  a quick concept) — so the design can be clicked through. Keep this code confined
-  to `prototype/`; it's a mockup for validation, not the start of the production
-  codebase, so don't let it pull implementation detail back into the design
-  documents.
+  a quick concept) — so the design can be clicked through. Build it to **production
+  standards** (real components, production-style structure, data behind a
+  **swappable source** keyed to the documented endpoints) so the front-end is a
+  faithful starting point — going to real development is **switching the mock source
+  for the real API**, not a rewrite. That's production *standard*, not production
+  *scope*: it stays a front-end, mock-data, MVP-scoped validation artifact — the
+  apiClient **auth/token plumbing (with a mock token) is expected**, but don't build a
+  backend, a **real auth/identity provider**, or features beyond the key flows, keep
+  the code confined to `prototype/`, and don't let its implementation detail leak back
+  into the design documents.
 - Don't invent facts to fill a template. If something is unknown, it's an
   assumption or an open question — say so.
 - Keep the loop honest: a document isn't `optimized` until its blocker/major

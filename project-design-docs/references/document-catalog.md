@@ -286,10 +286,16 @@ Contents:
   2. Front-end directory tree for the chosen framework/UI library. **Large:**
      `src/modules/<module>/{views, components, composables, api, store}` (module-
      scoped) + top-level `shared/` (cross-module components/utils), `router/`,
-     `app store`, `api/http`, `styles/tokens`, **i18n catalog (locales)**,
-     **theme/dark-mode handling**, `assets`. **Small:** flat `views/` +
-     `components/`. Real folder names — e.g. Vite + Vue 3 + Element Plus, Next.js
-     app router, or CRA/Vite + shadcn.
+     `app store`, `styles/tokens`, **i18n catalog (locales)**, **theme/dark-mode
+     handling**, `assets`. **Data-access convention:** a shared **`apiClient`** (base
+     HTTP — interceptors, a **unified auth/token layer** (attach `Authorization:
+     Bearer`, refresh / redirect on 401), error envelope; the single config/swap
+     point), **one api module per resource**, composed into an **aggregate `api`** so
+     call sites
+     read `api.<module>.<method>(args)` (each method ↔ a doc-06 endpoint); components
+     never call `fetch`/`axios` directly. **Small:** flat `views/` + `components/`.
+     Real folder names — e.g. Vite + Vue 3 + Element Plus, Next.js app router, or
+     CRA/Vite + shadcn.
   3. Back-end directory/package layout for the chosen framework **and architecture
      shape** — **module-first**: `src/modules/<module>/{controller, service, dto,
      entity}` (e.g. NestJS one module per domain / Spring Boot package-by-feature /
@@ -412,7 +418,9 @@ Include when the condition applies. Same structure discipline as above.
   spec the prototype is built from). Key flows, wireframe-level screen inventory
   (described), interaction & state rules (incl. the **empty / loading / error**
   states and **form presentation** — modal dialog / drawer for create/edit, a
-  full-page or wizard only for genuinely complex multi-step input), navigation map,
+  full-page or wizard only for genuinely complex multi-step input), **navigation map
+  / route tree** (top-level + **nested / child routes** — master→detail, tabbed
+  sub-sections — each mapping to a feature-tree page),
   accessibility, **responsive breakpoints** (the target
   devices and the breakpoint set — e.g. mobile ≤640, tablet 641–1024, desktop
   ≥1025 — plus how layout/nav reflows at each), **theme modes** (light / dark /
@@ -488,12 +496,18 @@ per-document loop. It belongs here only so the plan accounts for it.
   any code is committed.
 - **Upstream:** UX / Interaction Design Brief (screens & flows), Data Design
   (realistic fields/content), Requirements (the journeys worth prototyping).
-- **How it's built:** in the **actual chosen front-end stack** (e.g. Vite + Vue 3
-  + Element Plus, or React + Ant Design) using its **real components**, structured
-  as **pages + reusable components** (not one giant file), with a **mock-data**
-  module and **working interactions** (**create/edit forms in modal dialogs /
-  drawers**, confirm dialogs, toasts, drill-down, empty/loading/error) and **icons
-  from the chosen icon library** (the UI library's own set, or an open library like
+- **How it's built:** to **production standards** in the **actual chosen front-end
+  stack** (e.g. Vite + Vue 3 + Element Plus, or React + Ant Design) using its **real
+  components**, structured as **pages + reusable components** (not one giant file)
+  with a **data-access layer** — an **`apiClient`** (base HTTP, **unified auth/token**
+  (attach Bearer, handle 401) + the swap point), **per-module api modules**, and an
+  **aggregate `api`** called as
+  `api.<module>.<method>(args)` — **behind which the mock data sits as a swappable
+  source** shaped like the page→interface map (doc 06) endpoints, so real development
+  is **switching the source for the live API**, not a rewrite — and
+  **working interactions** (**create/edit forms in modal dialogs / drawers**,
+  confirm dialogs, toasts, drill-down, empty/loading/error) and **icons from the
+  chosen icon library** (the UI library's own set, or an open library like
   Iconify / Lucide when the framework ships none). `frontend-design` informs the
   visual direction; the build uses the real library. Scoped to MVP / key flows;
   each screen annotated with its FR IDs.
@@ -509,9 +523,14 @@ per-document loop. It belongs here only so the plan accounts for it.
 - **Production-grade bar:** looks like a deliberate design for *this* product (not
   a templated AI default), covers the key flows end-to-end with realistic
   content, meets the quality floor (responsive, keyboard focus, reduced motion),
-  and stays consistent with the requirements/data model. **Scope discipline:**
-  it's a validation mockup, not the production codebase — don't gold-plate it or
-  let its implementation choices leak into the design documents.
+  and stays consistent with the requirements/data model. **Built to production
+  standards** — data behind a swappable source keyed to the documented endpoints, so
+  the path to real is *switch the source*, not rewrite. **Scope discipline:** that's
+  production *standard*, not production *scope* — it stays a front-end, mock-data,
+  MVP-scoped validation artifact; the apiClient **auth/token plumbing (mock token) is
+  expected**, but don't gold-plate it with a backend / a real auth-identity provider /
+  extra features, and don't let its implementation choices leak into the design
+  documents.
 
 ## Production-grade bar — general
 

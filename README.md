@@ -42,8 +42,9 @@ A versioned design set (each doc carries `doc_version` / `updated` / `status`):
 
 Plus (conditional): UX/Interaction Brief, Security, Privacy/Compliance,
 Integration/Migration, Ops/Deployment, Cost/Capacity, **Caching Design**;
-an interactive **prototype** in the chosen front-end stack (real components,
-pages + components, mock data, working interactions, a compiled `dist/` preview);
+an interactive **prototype** in the chosen front-end stack, built to production
+standards (real components, pages + components, **mock data behind a swappable
+source**, working interactions, a compiled `dist/` preview);
 and `README` / `CHANGELOG` / `consistency-report` on assembly.
 
 ## 🔄 Pipeline

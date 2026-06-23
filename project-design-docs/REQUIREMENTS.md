@@ -1,5 +1,5 @@
 ---
-doc_version: 13
+doc_version: 17
 updated: 2026-06-19
 status: reviewed
 ---
@@ -54,12 +54,62 @@ version frontmatter above, iteration log at the bottom.)
 | R38 | **Forms in dialogs/drawers** — create/edit uses the UI library's modal dialog / drawer pattern (full-page or wizard only for genuinely complex multi-step input); each form opens, validates, submits → toast | ✅ | Phase 4a item 4, "Verify by clicking through", Prototype catalog, UX brief, Rubric D "Forms use the library's dialog/drawer pattern" |
 | R39 | **Icon library** — settled in Phase 0 (the UI library's own icon set; an open library — Iconify / Lucide / Tabler / Heroicons — when the framework ships none; askable); prototype uses it purposefully, one consistent family, no emoji/text stand-ins | ✅ | Phase 0 step 4, Phase 4a item 6, Prototype catalog, UX brief, Rubric D "Icons from one library, used purposefully" |
 | R40 | **Page → interface mapping** — for each page map its **display/data** (→ read/query endpoints) **and operations** (→ action endpoints) to concrete APIs, so the API surface is derived from real page needs and is **complete** (read/query/lookup endpoints not missed) | ✅ | Doc 04 (display + operations under each page), Doc 06 item 2 "API inventory — derived page-by-page" + bar, Rubric C "Feature-tree coverage", Phase 4a (prototype validates the map) |
+| R41 | **Prototype built to production standards — swappable data source** — real framework + production-style structure; mock data sits behind an `api`/`services` layer as one source shaped like the doc-06 endpoints, so real dev = switch the source, not rewrite. Production *standard*, not *scope* (still front-end/mock/MVP) | ✅ | Phase 4a intro + item 3 + item 7, Scope guardrails (reconciled), Prototype catalog (How it's built + scope discipline), Rubric D "Built to production standards" |
+| R42 | **apiClient layer + aggregate-api call convention** — data-access layer = an **`apiClient`** (base HTTP, the swap point) + **per-module api modules** + an **aggregate `api`**; call sites read **`api.<module>.<method>(args)`** (each method ↔ a doc-06 endpoint); no raw fetch/axios in components | ✅ | Phase 4a item 3 + item 7, file-layout tree (`api/{client,<module>,index}.js`), Doc 10 front-end "data-access convention", Prototype catalog, Rubric D "Built to production standards" |
+| R43 | **Structure-driven prototype acceptance — no dead ends** — explicit route tree incl. **nested/child routes**; every route → a real implemented page (no orphan route/page); review walks route → page → element so every **route, sub-route, tab, button, state toggle** has a working front-end impl (operations act on the defined data structures) | ✅ | Phase 4a item 3 (route tree), "Verify by clicking through" (structure-driven), Rubric D "Routing & structural completeness", Rubric C feature-tree coverage (route↔tree), UX brief (route tree) |
+| R44 | **Unified auth/token layer in apiClient** — framework-idiomatic auth in `apiClient`: a request interceptor **attaches the token** (`Authorization: Bearer`) from a token store + a **401 handler** (refresh / redirect to login); wired with a **mock token / mock login** in the prototype (token plumbing is production *standard*; a real IdP is out of *scope*) | ✅ | Phase 4a item 3 (apiClient) + item 7, file-layout tree (`client.js`), Scope guardrail + Prototype catalog (reconciled "real auth"), Doc 10 data-access convention, Rubric D "Built to production standards" |
 
 ## Working agreement
 - New requirements **improve this skill**, not the `crm-design-demo` example
   (the demo only validates the skill).
 
 ## Skill iteration log
+- **2026-06-19 · v1.16 — unified auth/token layer in apiClient.** The `apiClient`
+  gains a **framework-idiomatic unified auth layer**: a request interceptor that
+  **attaches the token** (`Authorization: Bearer`) from a token store, and a **401
+  handler** that refreshes or routes to login (e.g. axios interceptor + Pinia/Vuex
+  auth store in Vue; fetch wrapper + context/store in React). In the prototype it's
+  wired with a **mock token / mock login**; production swaps in the real token
+  endpoint. **Scope reconciled:** the earlier "don't add real auth" exclusion (4
+  places) is clarified — the **token plumbing with a mock token is production
+  *standard* and expected**, while a **real auth/identity-provider backend is out of
+  *scope***. Phase 4a item 3 (apiClient) + item 7, file-layout tree, scope guardrail,
+  Prototype catalog, Doc 10 data-access convention, and Rubric D updated. (R44)
+- **2026-06-19 · v1.15 — structure-driven prototype acceptance (no dead ends).**
+  Make the prototype review **route-tree-driven**: enumerate the route tree (top-level
+  **+ nested/child routes**), confirm **every route resolves to a real implemented
+  page** (no orphan route, no unrouted page), then walk **route → page → element** and
+  verify every **route, sub-route, tab, button, and state/status toggle reaches a
+  working front-end implementation** (operations acting on the data structures the
+  design defines). "No dead ends" — a control that renders but does nothing is a
+  defect. Phase 4a item 3 now requires the explicit route tree; "Verify by clicking
+  through" is reframed structure-first with a route→page→element checklist; Rubric D
+  gains "Routing & structural completeness"; Rubric C aligns prototype routes (incl.
+  nested) with feature-tree pages; the UX brief's navigation map becomes a route tree.
+  (R43)
+- **2026-06-19 · v1.14 — apiClient layer + aggregate-api call convention.** Make the
+  data-access layer concrete: an **`apiClient`** (base HTTP — base URL, interceptors,
+  auth, error envelope — the single config/swap point), **one api module per
+  resource**, and an **aggregate `api`** that composes them, so call sites read
+  **`api.<module>.<method>(args)`** (e.g. `api.leads.list(params)`) and never a raw
+  `fetch`/`axios`. Each api method ↔ a doc-06 endpoint; the mock sits behind
+  `apiClient`, so going to real dev = point `apiClient` at the live `/api/v1` with
+  call sites unchanged. Phase 4a item 3 (structure) + item 7 (swap point) + the
+  file-layout tree (`api/{client,<module>,index}.js`) updated; Doc 10 front-end gains
+  a "data-access convention"; Prototype catalog and Rubric D updated. (R42)
+- **2026-06-19 · v1.13 — prototype to production standards (swappable data source).**
+  The prototype is built to the **same engineering standards as production**, not as
+  a throwaway: all data access routes through an `api` / `services` layer, with the
+  **mock as one swappable source** shaped exactly like the page→interface map (doc
+  06) endpoints (same fields/types/pagination/error envelope), so **real development
+  is switching the data source for the live API, not a rewrite**. Phase 4a gains the
+  framing (intro), the data-access layer (item 3), and a dedicated item 7; the scope
+  guardrail is **reconciled** — the old "not the start of the production codebase"
+  wording contradicted this, now reframed as production *standard*, not production
+  *scope* (still front-end / mock / MVP — no backend, real auth, or extra features).
+  Prototype catalog (How it's built + scope discipline) and Rubric D ("Built to
+  production standards — data behind a swappable source") updated. READMEs note the
+  swappable mock source. (R41)
 - **2026-06-19 · v1.12 — page → interface mapping (completeness).** Make the API
   design derive from **each page's display + operation needs**, not operations
   alone. (1) Feature Tree (04): each page node now captures **both what it displays**

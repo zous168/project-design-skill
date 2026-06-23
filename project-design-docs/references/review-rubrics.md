@@ -104,9 +104,10 @@ that per-document review structurally cannot.
   prototyped) a screen; **each page's display/data maps to a read/query endpoint and
   each operation to an action endpoint** — walk every page's *display + operations*,
   not operations alone, since that's what surfaces missing read endpoints; conversely
-  every prototype screen and API endpoint appears in the tree. Flag any display
-  lacking a read endpoint, any operation lacking an action endpoint, and any
-  screen/endpoint not in the tree.
+  every prototype **route / screen (including nested routes)** and API endpoint
+  appears in the tree. Flag any display lacking a read endpoint, any operation lacking
+  an action endpoint, any route/screen not in the tree, and any tree page with no
+  route.
 - **Roles consistency** — the roles in requirements, the role column of the
   feature tree, and the auth/role on each API endpoint agree; no operation is
   reachable by a role the requirements don't grant it.
@@ -215,6 +216,30 @@ a quick sanity list alongside it. They mirror the same anti-slop principles
   scanning (nav, actions, status, empty states). Flag emoji or bare-text stand-ins
   for icons, clashing icon sets, or a UI left visually flat for want of icons — and
   conversely, icon clutter that decorates without informing.
+- **Built to production standards — data behind a swappable source.** Data access
+  goes through a layered `api` (an **`apiClient`** base + **per-module api modules** +
+  an **aggregate `api`**), with components/views calling **`api.<module>.<method>(args)`**
+  — never a raw `fetch`/`axios` or a mock fixture directly. The **mock is a swappable
+  source behind `apiClient`**, shaped like the documented endpoints (doc 06). The
+  acceptance test: could real development just point `apiClient` at the live API
+  (call sites unchanged), or would it need a rewrite? The **auth/token mechanism sits
+  in `apiClient`** too — a token-attaching interceptor and a **401 handler** (refresh
+  / redirect to login), wired with a **mock token** in the prototype. Flag raw
+  fetch/axios in components, inline mock data, a missing apiClient/aggregate layer,
+  ad-hoc per-call auth or no token plumbing at all, or shapes that diverge from the
+  page→interface map — each turns "switch the source" into "rebuild." (This is
+  production *standard*, not *scope*: don't penalize the absence of a backend, a **real
+  auth/identity provider**, or features beyond the key flows — those are correctly out
+  of scope; the token *plumbing* with a mock token, though, is expected.)
+- **Routing & structural completeness — no dead ends.** There's an explicit **route
+  tree** (top-level + **nested / child routes**), and **every route resolves to a real
+  implemented page** — no route 404s, no placeholder page, no page built but
+  unrouted. Reviewed **structurally**, route → page → element: every **route,
+  sub-route, tab, button, and state / status toggle reaches a working front-end
+  implementation**, and each page's operations act on the **data structures the design
+  defines** (feature tree + page→interface map + data model). Flag any dead link, dead
+  tab, inert button, non-switching toggle, or route with no page — a control that
+  renders but does nothing is a defect.
 - **Interaction is click-verified (acceptance), not just present in code.** Every
   key interactive element was **actually exercised** and produced its expected
   effect: action buttons → dialogs/drawers, confirm → toast, row/card → drill-down/
