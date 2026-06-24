@@ -1,5 +1,5 @@
 ---
-doc_version: 17
+doc_version: 18
 updated: 2026-06-19
 status: reviewed
 ---
@@ -58,12 +58,24 @@ version frontmatter above, iteration log at the bottom.)
 | R42 | **apiClient layer + aggregate-api call convention** — data-access layer = an **`apiClient`** (base HTTP, the swap point) + **per-module api modules** + an **aggregate `api`**; call sites read **`api.<module>.<method>(args)`** (each method ↔ a doc-06 endpoint); no raw fetch/axios in components | ✅ | Phase 4a item 3 + item 7, file-layout tree (`api/{client,<module>,index}.js`), Doc 10 front-end "data-access convention", Prototype catalog, Rubric D "Built to production standards" |
 | R43 | **Structure-driven prototype acceptance — no dead ends** — explicit route tree incl. **nested/child routes**; every route → a real implemented page (no orphan route/page); review walks route → page → element so every **route, sub-route, tab, button, state toggle** has a working front-end impl (operations act on the defined data structures) | ✅ | Phase 4a item 3 (route tree), "Verify by clicking through" (structure-driven), Rubric D "Routing & structural completeness", Rubric C feature-tree coverage (route↔tree), UX brief (route tree) |
 | R44 | **Unified auth/token layer in apiClient** — framework-idiomatic auth in `apiClient`: a request interceptor **attaches the token** (`Authorization: Bearer`) from a token store + a **401 handler** (refresh / redirect to login); wired with a **mock token / mock login** in the prototype (token plumbing is production *standard*; a real IdP is out of *scope*) | ✅ | Phase 4a item 3 (apiClient) + item 7, file-layout tree (`client.js`), Scope guardrail + Prototype catalog (reconciled "real auth"), Doc 10 data-access convention, Rubric D "Built to production standards" |
+| R45 | **Checklist-driven review mechanism** — every review pass works through the **Skill review checklist (master index)**, ticks each item pass/fail/N-A **with evidence**, and **records the ticked checklist** in the review trail (per-doc / prototype / consistency); status never advances while a blocker/major box is unchecked | ✅ | Principle "Never rubber-stamp — checklist-driven", Phases 3b/4b/5, review-rubrics.md "Skill review checklist", Reference-files pointer |
 
 ## Working agreement
 - New requirements **improve this skill**, not the `crm-design-demo` example
   (the demo only validates the skill).
 
 ## Skill iteration log
+- **2026-06-19 · v1.17 — checklist-driven review mechanism.** Formalize *审核*: every
+  review pass is **checklist-driven**, not freeform. Added a **Skill review checklist
+  (master index)** to `review-rubrics.md` — grouped per-document (Phase 3b) / prototype
+  (Phase 4b) / consistency (Phase 5) / every-pass — that the reviewer **walks, ticks
+  each item pass/fail/N-A with evidence, and records** in the review trail
+  (`00-PROGRESS.md` / `prototype-notes.md` / `consistency-report.md`); status never
+  advances while a blocker/major box is unchecked. Wired into the "Never rubber-stamp"
+  principle and Phases 3b/4b/5, plus the Reference-files pointer. The checklist is an
+  *index* over the existing rubrics + per-document bars + this session's requirement
+  checks (page→interface, production standards, apiClient, routing/no-dead-ends,
+  auth/token) — one place to walk so nothing is skipped. (R45)
 - **2026-06-19 · v1.16 — unified auth/token layer in apiClient.** The `apiClient`
   gains a **framework-idiomatic unified auth layer**: a request interceptor that
   **attaches the token** (`Authorization: Bearer`) from a token store, and a **401

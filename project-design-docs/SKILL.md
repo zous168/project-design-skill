@@ -57,9 +57,13 @@ validated as something you can look at, not only read.
 - **Clarify before committing, then run autonomously.** Ambiguity is cheapest
   to resolve at the start. Ask focused, optioned questions up front; once the
   baseline is agreed, drive the rest of the pipeline without nagging.
-- **Never rubber-stamp.** The review pass is a genuinely separate, critical
-  read against rubrics — not a pat on the back for the draft you just wrote.
-  Approach it as a skeptical reviewer who is trying to find what's wrong.
+- **Never rubber-stamp — reviews are checklist-driven.** The review pass is a
+  genuinely separate, critical read against rubrics — not a pat on the back for the
+  draft you just wrote; approach it as a skeptical reviewer trying to find what's
+  wrong. **Every review pass works through the *Skill review checklist*
+  (`references/review-rubrics.md`)** — tick each item pass/fail with evidence and
+  record the ticked list in the review trail — so a review is **auditable, not a
+  vibe**, and nothing on the list is silently skipped.
 - **Production-grade means actionable.** A document is done when a competent
   team could act on it without guessing: concrete, measurable, no hand-wavy
   placeholders, assumptions made explicit.
@@ -277,9 +281,11 @@ section genuinely doesn't apply, write "N/A — <reason>" rather than leaving a
 hole. Update status → `drafted`.
 
 **3b — Review (Reviewer).** Switch hats and read the draft critically against
-the **content** and **logic** rubrics in `references/review-rubrics.md`. Produce
-a findings list (severity blocker/major/minor, location, and a concrete fix for
-each). For larger or higher-stakes projects, get independence by spawning a
+the **content** and **logic** rubrics in `references/review-rubrics.md`. **Work
+through the *Per-document* section of the Skill review checklist there** — tick each
+item pass/fail/N-A with evidence, and record the ticked checklist in the
+`00-PROGRESS.md` review trail. Produce a findings list (severity
+blocker/major/minor, location, and a concrete fix for each). For larger or higher-stakes projects, get independence by spawning a
 subagent to do this review (give it the draft + the rubric file + the upstream
 docs); otherwise do a deliberate, skeptical self-review pass. The goal is to
 find real problems — a review that finds nothing on a first draft is a yellow
@@ -473,8 +479,10 @@ Point taste at the generated `prototype/` and run its **pre-flight check** /
 audit-first variant aimed at critiquing existing UI — useful here). Its scope
 caveat above applies to *generation*, not review: its anti-slop principles judge
 any UI fairly. Capture screenshots first if the environment supports it (a picture
-is worth far more than a paragraph here). Record its findings in
-`prototype-notes.md` with the usual severity levels. For higher-stakes work, run
+is worth far more than a paragraph here). **Work through the *Prototype* section of
+the Skill review checklist (Rubric D)** and record the **ticked checklist** in
+`prototype-notes.md` alongside its findings, with the usual severity levels — so the
+prototype review is auditable, not a vibe. For higher-stakes work, run
 this as an independent pass (a subagent given the prototype + the taste skill) so
 it's a genuine critique, not self-congratulation.
 
@@ -496,8 +504,10 @@ then reconciles everything. Update the Prototype status → `optimized`.
 
 Once all documents are optimized (and the prototype, if any), do a whole-set
 pass — the single most valuable step for production quality, because
-individually-fine artifacts routinely disagree with each other. Use the
-**consistency** rubric in `references/review-rubrics.md`. Check at minimum:
+individually-fine artifacts routinely disagree with each other. **Work through the
+*Consistency* section of the Skill review checklist (Rubric C)** in
+`references/review-rubrics.md`, ticking each item with evidence and recording it in
+`consistency-report.md`. Check at minimum:
 
 - **Terminology**: the same concept is named the same way everywhere; a glossary
   covers key terms.
@@ -694,8 +704,8 @@ code — by design; everything else is code-free.)
 | PT | Prototype (if in scope) | pending\|generated\|taste-reviewed\|optimized\|done | |
 
 ## Review trail
-- [01] review: <findings summary> → <fixes applied>
-- [PT] taste review: <findings summary> → <fixes applied; docs fed back>
+- [01] review: checklist <n/n passed; failed items> — <findings summary> → <fixes applied>
+- [PT] taste review: checklist <n/n passed; failed items> — <findings> → <fixes; docs fed back>
 ```
 
 ## `README.md` (index) template
@@ -733,9 +743,10 @@ code — by design; everything else is code-free.)
   structure, and what separates a production-grade version from a superficial
   one. **Read it in Phase 1** to choose the set, and again per document in
   Phase 3a for that document's template.
-- `references/review-rubrics.md` — the content, logic, consistency, **and taste**
-  review checklists, plus the findings format and severity definitions. **Read it
-  in Phase 3b (content/logic), Phase 4b (taste), and Phase 5 (consistency).**
+- `references/review-rubrics.md` — the **Skill review checklist (master index)** that
+  every review pass walks and records, plus the content, logic, consistency, **and
+  taste** rubrics behind it and the findings format and severity definitions. **Read
+  it in Phase 3b (content/logic), Phase 4b (taste), and Phase 5 (consistency).**
 - `frontend-design` **skill** (external) — the UI generator used in Phase 4a.
 - `taste` **skill** = `design-taste-frontend` (external) — the Phase 4b taste review.
 

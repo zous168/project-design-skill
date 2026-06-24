@@ -12,6 +12,7 @@ review was too shallow — push harder before accepting that.
 
 Contents:
 - [Findings format & severity](#findings-format--severity)
+- [Skill review checklist (master index)](#skill-review-checklist-master-index)
 - [Rubric A — Content review](#rubric-a--content-review-per-document)
 - [Rubric B — Logic review](#rubric-b--logic-review-per-document)
 - [Rubric C — Consistency review](#rubric-c--consistency-review-cross-document)
@@ -41,6 +42,65 @@ Record each finding as:
 A document is `optimized` only when all **blocker** and **major** findings are
 actually resolved — not merely acknowledged. After applying fixes, re-check the
 specific items rather than assuming the edit worked.
+
+---
+
+## Skill review checklist (master index)
+
+**The review mechanism: every review pass is checklist-driven, not freeform.** Build
+the checklist for the artifact under review from the relevant section below, **tick
+each item pass / fail / N-A with evidence** (file + location, or the click that proved
+it), and **record the ticked checklist** in the review trail — `00-PROGRESS.md` per
+document, `prototype-notes.md` for the prototype, `consistency-report.md` for the set.
+Each failed item becomes a finding in the format above. **Status never advances while
+any blocker/major box is unchecked.** The rubrics below are the detail behind each
+line; this index is what you *walk* so nothing is skipped.
+
+### Per-document review — Phase 3b (run for every document)
+- [ ] Every catalog-template section present, real content, no TODO/placeholder
+- [ ] That document's **production-grade bar** (its `document-catalog.md` entry) is met
+- [ ] **Content** (Rubric A): complete · correct · specific/measurable · actionable ·
+      right altitude · justified · no invention
+- [ ] **Logic** (Rubric B): internally coherent · feasible · sound cause→effect ·
+      goal-aligned · assumptions explicit · edge cases · upstream deps current
+- [ ] **Version frontmatter** present and bumped (`doc_version` / `updated` / `status`)
+
+### Prototype review — Phase 4b (Rubric D)
+- [ ] Not a templated default; grounded in the subject; **calibrated to the surface's
+      aesthetic bar**; honours any reference material
+- [ ] Typography · structure-encodes-meaning · one signature + restraint · intentional
+      copy · **quality floor** (visible focus, reduced-motion, consistent spacing)
+- [ ] **Responsive** at the declared breakpoints (reflows, not just shrinks)
+- [ ] **Cross-cutting defaults**: theme (light/dark/auto) legible; language switch flips
+      strings via the i18n catalog (no hard-coded text)
+- [ ] **Matches the chosen UI library**; **icons** from one library, used purposefully
+- [ ] **Forms** in the library's dialog/drawer pattern (full-page/wizard only for complex)
+- [ ] **Built to production standards**: `apiClient` + per-module modules + aggregate
+      `api`; components call `api.<module>.<method>(args)` (no raw fetch/axios); **mock
+      behind a swappable source** shaped like the doc-06 endpoints; **auth/token**
+      (token interceptor + 401 handler) in `apiClient` with a mock token
+- [ ] **Routing & structural completeness — no dead ends**: route tree incl. nested
+      routes, every route → a real page; every route / sub-route / tab / button /
+      state-toggle reaches a working implementation
+- [ ] **Sub-system coverage**: every in-scope surface prototyped or explicitly deferred
+- [ ] **Interaction click-verified**: route → page → element checklist exercised with
+      preview/browser tools (evidence, not assertion)
+- [ ] Consistent with requirements / UX brief / data model
+
+### Consistency review — Phase 5 (Rubric C)
+- [ ] **Terminology** one-name-everywhere; glossary obeyed
+- [ ] **Entity/attribute alignment** domain ↔ data ↔ API ↔ requirements
+- [ ] **Scope alignment**; **decision coherence** (arch / tech / NFR / data agree)
+- [ ] **Feature-tree coverage**: each page's display + operations → read/action
+      endpoints; the **page→interface map** is complete; prototype routes/screens ↔ tree
+- [ ] **Roles** consistent; **REST** uniform; **cfg/data/logs/stats** partitioning;
+      **module alignment**; **async coverage**; **cache consistency** (if a cache exists)
+- [ ] **Traceability**: forward (FR → design → test) and backward; IDs unique & stable
+
+### Every review pass
+- [ ] Findings recorded with severity in the format above
+- [ ] All **blocker/major** items fixed and **re-checked** (not merely acknowledged)
+- [ ] The ticked checklist + the fixes appended to the review trail (auditable)
 
 ---
 
